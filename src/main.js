@@ -4,7 +4,7 @@ class Gem {
     }
 }
 
-class Grid  {
+export class Grid  {
     constructor(schema) {
         this.schema = schema
         this.current = this.create()
@@ -25,17 +25,13 @@ class Swap  {
     }
 
     with(gem2) {
+        console.log("swapping ", gem, gem2);
         // swap gem1 with gem2 here
         // alter Grid current state
     }
 }
 
-const main = schema => {
+export const main = schema => {
     const game = new Grid(schema);
     return game.current;
-}
-
-export default {
-    main,
-    Grid
 }
