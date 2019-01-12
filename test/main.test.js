@@ -21,12 +21,7 @@ describe('main', () => {
     })
 })
 
-describe.only('rotated2dArray', () => {
-    // 0, 0 === 5, 5
-    // 1, 2 === 2, 4
-    test('rotates x, y coords to the equivalent that is 90 degrees clockwise', () => {
-    })
-})
+
 
 describe('find gem in grid', () => {
     let schema
