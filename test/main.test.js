@@ -21,6 +21,13 @@ describe('main', () => {
     })
 })
 
+describe.only('rotated2dArray', () => {
+    // 0, 0 === 5, 5
+    // 1, 2 === 2, 4
+    test('rotates x, y coords to the equivalent that is 90 degrees clockwise', () => {
+    })
+})
+
 describe('find gem in grid', () => {
     let schema
 
@@ -39,7 +46,8 @@ describe('find gem in grid', () => {
         const grid = new Grid(schema)
         const x = 0
         const y = 3
-        expect(grid.at(x, y).type).toEqual(3)
+        expect(instanceof grid.at(x, y)).toEqual(Gem)
+        expect(grid.at(x, y).type).toEqual(2)
     });
 });
 

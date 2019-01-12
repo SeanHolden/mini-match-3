@@ -14,6 +14,9 @@ export class Grid  {
         return this.schema.map(column => column.map(type => new Gem(type)))
     }
 
+    at(x, y) {
+    }
+
     swap(gem) {
         return new Swap(gem);
     }
