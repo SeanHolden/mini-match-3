@@ -40,6 +40,10 @@ const monkey = (coords) => {
   if (coords.x === 1 && coords.y === 3) {
     return ary[1][1]
   }
+
+  if (coords.x === 1 && coords.y === 4) {
+    return ary[1][0]
+  }
 }
 
 describe('rotatedGridCoords', () => {
@@ -86,5 +90,10 @@ describe('rotatedGridCoords', () => {
   test('entering 1,3 returns actual value of 1,1', () => {
     const coords = { x: 1, y: 3 }
     expect(monkey(coords)).toEqual(3)
+  })
+
+  test('entering 1,4 returns actual value of 1,0', () => {
+    const coords = { x: 1, y: 4 }
+    expect(monkey(coords)).toEqual(2)
   })
 })
