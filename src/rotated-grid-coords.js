@@ -1,2 +1,0 @@
-const rotatedGridCoords = (array, key) => {
-}
