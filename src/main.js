@@ -1,4 +1,4 @@
-class Gem {
+export class Gem {
   constructor(type) {
     this.type = type
   }
@@ -14,23 +14,33 @@ export class Grid  {
     return this.schema.map(column => column.map(type => new Gem(type)))
   }
 
-  at(x, y) {
+  at(position) {
+    return this.current[position.y][position.x]
   }
 
-  swap(gem) {
-    return new Swap(gem);
+  swap(position) {
+    return new Swap(this, position)
+  }
+
+  update(updatedGrid) {
+    this.current = updatedGrid
   }
 }
 
 class Swap  {
-  constructor(gem) {
-    this.gem = gem;
+  constructor(grid, position) {
+    this.grid = grid
+    this.position = position
   }
 
-  with(gem2) {
-    console.log("swapping ", gem, gem2);
-    // swap gem1 with gem2 here
-    // alter Grid current state
+  with(position2) {
+    const grid = this.grid.current.slice()
+    const pos1 = grid[this.position.y][this.position.x]
+    const pos2 = grid[position2.y][position2.x]
+    grid[this.position.y][this.position.x] = pos2
+    grid[position2.y][position2.x] = pos1
+    this.grid.update(grid)
+    return true
   }
 }
 
