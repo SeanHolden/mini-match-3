@@ -1,10 +1,6 @@
-export class Gem {
-  constructor(type) {
-    this.type = type
-  }
-}
+import Gem from './gem'
 
-export class Grid  {
+class Grid  {
   constructor(schema) {
     this.schema = schema
     this.current = this.create()
@@ -44,7 +40,4 @@ class Swap  {
   }
 }
 
-export const main = schema => {
-  const game = new Grid(schema);
-  return game.current;
-}
+export default Grid
