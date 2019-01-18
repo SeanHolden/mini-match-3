@@ -1,4 +1,5 @@
 import Gem from './gem'
+import Swap from './swap'
 
 class Grid  {
   constructor(schema) {
@@ -23,21 +24,6 @@ class Grid  {
   }
 }
 
-class Swap  {
-  constructor(grid, position) {
-    this.grid = grid
-    this.position = position
-  }
 
-  with(position2) {
-    const grid = this.grid.current.slice()
-    const pos1 = grid[this.position.y][this.position.x]
-    const pos2 = grid[position2.y][position2.x]
-    grid[this.position.y][this.position.x] = pos2
-    grid[position2.y][position2.x] = pos1
-    this.grid.update(grid)
-    return true
-  }
-}
 
 export default Grid

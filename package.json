@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Version of a match 3 game without graphics",
   "scripts": {
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "author": "Sean Holden",
   "license": "ISC",
