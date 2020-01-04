@@ -1,29 +1,27 @@
-import Gem from './gem'
-import Swap from './swap'
+import Gem from "./gem";
+import Swap from "./swap";
 
-class Grid  {
+class Grid {
   constructor(schema) {
-    this.schema = schema
-    this.current = this.create()
+    this.schema = schema;
+    this.current = this.create();
   }
 
   create() {
-    return this.schema.map(column => column.map(type => new Gem(type)))
+    return this.schema.map(column => column.map(type => new Gem(type)));
   }
 
   at(position) {
-    return this.current[position.y][position.x]
+    return this.current[position.y][position.x];
   }
 
   swap(position) {
-    return new Swap(this, position)
+    return new Swap(this, position);
   }
 
   update(updatedGrid) {
-    this.current = updatedGrid
+    this.current = updatedGrid;
   }
 }
 
-
-
-export default Grid
+export default Grid;

@@ -1,28 +1,27 @@
-import isNeighbour from './is-neighbour'
+import isNeighbour from "./is-neighbour";
 
-class Swap  {
+class Swap {
   constructor(grid, position) {
-    this.grid = grid
-    this.position = position
+    this.grid = grid;
+    this.position = position;
   }
 
   with(position2) {
     if (isNeighbour(this.position, position2)) {
-      return this.performSwap(position2)
+      return this.performSwap(position2);
     } else {
-      return false
+      return false;
     }
   }
 
   performSwap(position2) {
-    const newGrid = this.grid.current.slice()
-    const pos1 = newGrid[this.position.y][this.position.x]
-    const pos2 = newGrid[position2.y][position2.x]
-    newGrid[this.position.y][this.position.x] = pos2
-    newGrid[position2.y][position2.x] = pos1
-    this.grid.update(newGrid)
-    return true
+    const newGrid = this.grid.current.slice();
+    const pos1 = newGrid[this.position.y][this.position.x];
+    newGrid[this.position.y][this.position.x] = newGrid[position2.y][position2.x];
+    newGrid[position2.y][position2.x] = pos1;
+    this.grid.update(newGrid);
+    return true;
   }
 }
 
-export default Swap
+export default Swap;
