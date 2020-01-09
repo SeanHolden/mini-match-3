@@ -1,7 +1,13 @@
 class Gem {
   constructor(type) {
-    this.type = type
+    this.type = type;
+  }
+
+  pop() {
+    this.type = BLANK;
   }
 }
 
-export default Gem
+export const BLANK = 0;
+
+export default Gem;

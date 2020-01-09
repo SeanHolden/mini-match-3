@@ -1,6 +1,6 @@
 import Gem from "./gem";
 import Swap from "./swap";
-import { alreadyFound, scanForMatches } from "./scan-for-matches";
+import { alreadyFound, scanForMatches, threeInRow } from "./scan-for-matches";
 
 class Grid {
   constructor(schema) {
@@ -24,6 +24,15 @@ class Grid {
     this.current = updatedGrid;
   }
 
+  pop(matches) {
+    matches.forEach(combo => {
+      combo.forEach(pos => {
+        const gem = this.at(pos);
+        gem.pop();
+      });
+    });
+  }
+
   findMatches() {
     const allMatches = [];
     this.current.forEach((line, y) => {
@@ -31,8 +40,8 @@ class Grid {
         if (allMatches.filter(arr => alreadyFound({ x, y }, arr)).length > 0) {
           return;
         }
-        const matches = scanForMatches({x, y}, this);
-        matches.length >= 3 && allMatches.push(matches);
+        const matches = scanForMatches({ x, y }, this);
+        threeInRow(matches) && allMatches.push(matches);
       });
     });
     return allMatches;
