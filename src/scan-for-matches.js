@@ -22,8 +22,8 @@ export const alreadyFound = ({ x, y }, arr) =>
 export const threeInRow = combo => {
   const a = combo.map(pos => pos.x).sort();
   const b = combo.map(pos => pos.y).sort();
-  const threeOrMore = /((\d)(,))\1+\2/; // finds repeating number pattern e.g. 1,2,2,2,3, (true)
-  return threeOrMore.test(a.toString()) || threeOrMore.test(b.toString());
+  const threeOrMore = /(\d)\1{2,}/;
+  return threeOrMore.test(a.join("")) || threeOrMore.test(b.join(""));
 };
 
 const valid = (pos, arr) => inBounds(pos) && !alreadyFound(pos, arr);
