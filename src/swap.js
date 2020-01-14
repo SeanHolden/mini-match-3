@@ -15,12 +15,12 @@ class Swap {
   }
 
   _performSwap(position2) {
-    const newGrid = [...this.grid.current];
-    const pos1 = newGrid[this.position.y][this.position.x];
-    newGrid[this.position.y][this.position.x] =
-      newGrid[position2.y][position2.x];
-    newGrid[position2.y][position2.x] = pos1;
-    this.grid.update(newGrid);
+    const pos1 = this.grid.at({ x: this.position.x, y: this.position.y });
+    this.grid.current[this.position.y][this.position.x] = this.grid.at({
+      x: position2.x,
+      y: position2.y
+    });
+    this.grid.current[position2.y][position2.x] = pos1;
     return true;
   }
 }

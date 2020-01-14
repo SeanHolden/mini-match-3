@@ -1,15 +1,12 @@
 import Gem from "./gem";
 import Swap from "./swap";
 import { alreadyFound, scanForMatches, threeInRow } from "./scan-for-matches";
+import { sortByY } from "./sort";
+import { drop } from "./drop";
 
 class Grid {
   constructor(schema) {
-    this.schema = schema;
-    this.current = this.create();
-  }
-
-  create() {
-    return this.schema.map(column => column.map(type => new Gem(type)));
+    this.current = schema.map(column => column.map(type => new Gem(type)));
   }
 
   at(position) {
@@ -18,19 +15,6 @@ class Grid {
 
   swap(position) {
     return new Swap(this, position);
-  }
-
-  update(updatedGrid) {
-    this.current = updatedGrid;
-  }
-
-  pop(matches) {
-    matches.forEach(combo => {
-      combo.forEach(pos => {
-        const gem = this.at(pos);
-        gem.pop();
-      });
-    });
   }
 
   findMatches() {
@@ -46,6 +30,52 @@ class Grid {
     });
     return allMatches;
   }
+
+  pop(matches) {
+    matches.forEach(combo => {
+      combo.forEach(pos => {
+        const gem = this.at(pos);
+        gem.pop();
+      });
+    });
+  }
+
+  hasGaps() {
+    return this.current.find(line => line.find(gem => gem.isBlank()));
+  }
+
+  column(num) {
+    return this.current.map(line => line[num]);
+  }
+
+  drop() {
+    if (!this.hasGaps()) return;
+
+    let droppables = [];
+    this.current.forEach((line, y) => {
+      line.forEach((gem, x) => getDroppables(this, gem, x, y, droppables));
+    });
+
+    droppables // sort by y (large to small) so that we loop from bottom upwards
+      .sort(sortByY)
+      .forEach(item => drop(item, this));
+  }
 }
+
+const getDroppables = (grid, gem, x, y, droppables) => {
+  if (gem.isBlank()) {
+    // drop everything above this gem. Ignore blanks.
+    for (y - 1; y >= 0; y--) {
+      if (grid.at({ x, y }).isBlank()) {
+        continue;
+      }
+      const alreadyDroppable = droppables.find(a => a.x === x && a.y === y);
+      alreadyDroppable
+        ? alreadyDroppable.toDrop++
+        : droppables.push({ x, y, toDrop: 1 });
+    }
+
+  }
+};
 
 export default Grid;

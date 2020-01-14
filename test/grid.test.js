@@ -250,4 +250,71 @@ describe("grid", () => {
       expect(gridCurrent).toEqual(schemaAfterPop);
     });
   });
+  describe("column", () => {
+    it("returns array of a given column in grid (0)", () => {
+      const grid = new Grid(schemaNoMatches);
+      expect(grid.column(0).map(gem => gem.type)).toEqual([1, 7, 6, 5, 4, 3]);
+    });
+    it("returns array of a given column in grid (1)", () => {
+      const grid = new Grid(schemaNoMatches);
+      expect(grid.column(1).map(gem => gem.type)).toEqual([2, 1, 7, 6, 5, 4]);
+    });
+  });
+  describe("drop", () => {
+    describe("when no gaps", function() {
+      it("does not change anything", function() {
+        const grid = new Grid(schemaNoMatches);
+        grid.drop();
+        const gridCurrent = grid.current.map(line => line.map(gem => gem.type));
+        expect(gridCurrent).toEqual(schemaNoMatches);
+      });
+    });
+    describe("when gaps", function() {
+      it("drops the correct gems into the correct places", () => {
+        // rule: each gem needs to drop down by the number of 0's below it in that column
+        const schemaWithGaps = [
+          [3, 1, 2, 3, 4, 5],
+          [6, 1, 1, 0, 3, 4],
+          [5, 0, 0, 0, 0, 3],
+          [4, 5, 6, 1, 1, 2],
+          [0, 4, 5, 0, 0, 0],
+          [0, 0, 0, 5, 0, 1]
+        ], schemaAfterDrop = [
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 5],
+          [3, 1, 2, 0, 0, 4],
+          [6, 1, 1, 3, 4, 3],
+          [5, 5, 6, 1, 3, 2],
+          [4, 4, 5, 5, 1, 1]
+        ];
+        const grid = new Grid(schemaWithGaps);
+        grid.drop();
+
+        const gridCurrent = grid.current.map(line => line.map(gem => gem.type));
+        expect(gridCurrent).toEqual(schemaAfterDrop);
+      });
+      it("drops the correct gems into the correct places - 2", () => {
+        const schemaWithGaps = [
+          [1, 0, 0, 0, 4, 5],
+          [6, 1, 1, 0, 3, 4],
+          [5, 6, 0, 0, 0, 3],
+          [4, 5, 6, 0, 1, 2],
+          [3, 0, 0, 0, 0, 1],
+          [2, 3, 0, 5, 6, 1]
+        ], schemaAfterDrop = [
+          [1, 0, 0, 0, 0, 5],
+          [6, 0, 0, 0, 0, 4],
+          [5, 1, 0, 0, 4, 3],
+          [4, 6, 0, 0, 3, 2],
+          [3, 5, 1, 0, 1, 1],
+          [2, 3, 6, 5, 6, 1]
+        ];
+        const grid = new Grid(schemaWithGaps);
+        grid.drop();
+
+        const gridCurrent = grid.current.map(line => line.map(gem => gem.type));
+        expect(gridCurrent).toEqual(schemaAfterDrop);
+      });
+    });
+  });
 });

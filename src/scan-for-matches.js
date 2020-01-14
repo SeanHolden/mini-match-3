@@ -1,4 +1,4 @@
-export const scanForMatches = (pos, grid, matchesSoFar = [pos]) => {
+export const scanForMatches = (pos, grid, matches = [pos]) => {
   [
     { x: pos.x + 1, y: pos.y }, // right
     { x: pos.x, y: pos.y + 1 }, // down
@@ -6,14 +6,14 @@ export const scanForMatches = (pos, grid, matchesSoFar = [pos]) => {
     { x: pos.x, y: pos.y - 1 } // up
   ].forEach(neighbor => {
     if (
-      valid(neighbor, matchesSoFar) &&
+      valid(neighbor, matches) &&
       grid.at(pos).type === grid.at(neighbor).type
     ) {
-      matchesSoFar.push(neighbor);
-      scanForMatches({ x: neighbor.x, y: neighbor.y }, grid, matchesSoFar);
+      matches.push(neighbor);
+      scanForMatches({ x: neighbor.x, y: neighbor.y }, grid, matches);
     }
   });
-  return matchesSoFar;
+  return matches;
 };
 
 export const alreadyFound = ({ x, y }, arr) =>

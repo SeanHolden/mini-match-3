@@ -24,3 +24,35 @@ describe("scan-for-matches", () => {
     });
   });
 });
+
+const hasThreeInRow = array => {
+  let result = false;
+
+  groupDuplicates(array).forEach(dupe => {
+    if (dupe.length >= 3) {
+      result = true;
+    }
+  });
+
+  return result;
+};
+
+export const groupDuplicates = array => {
+  const sortedArray = array.sort();
+  const result = [];
+  let dupes = [];
+  let previousValue = sortedArray[0];
+
+  sortedArray.forEach(value => {
+    if (previousValue === value) {
+      dupes.push(value);
+    } else {
+      result.push(dupes);
+      dupes = [value];
+    }
+    previousValue = value;
+  });
+  result.push(dupes);
+
+  return result;
+};

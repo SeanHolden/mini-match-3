@@ -6,6 +6,10 @@ class Gem {
   pop() {
     this.type = BLANK;
   }
+
+  isBlank() {
+    return this.type === BLANK;
+  }
 }
 
 export const BLANK = 0;
