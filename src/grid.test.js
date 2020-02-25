@@ -1,5 +1,5 @@
-import Grid from "../src/grid";
-import Gem from "../src/gem";
+import Grid from "./grid";
+import Gem from "./gem";
 
 describe("grid", () => {
   const schemaNoMatches = [

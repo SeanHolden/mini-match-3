@@ -1,4 +1,4 @@
-import { threeInRow } from "../src/scan-for-matches";
+import { threeInRow } from "./scan-for-matches";
 
 describe("scan-for-matches", () => {
   describe("threeInRow", () => {

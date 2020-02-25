@@ -1,4 +1,4 @@
-import Gem, {BLANK} from "../src/gem";
+import Gem, {BLANK} from "./gem";
 
 describe("gem", () => {
   describe("pop", () => {
