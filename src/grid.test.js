@@ -273,20 +273,21 @@ describe("grid", () => {
       it("drops the correct gems into the correct places", () => {
         // rule: each gem needs to drop down by the number of 0's below it in that column
         const schemaWithGaps = [
-          [3, 1, 2, 3, 4, 5],
-          [6, 1, 1, 0, 3, 4],
-          [5, 0, 0, 0, 0, 3],
-          [4, 5, 6, 1, 1, 2],
-          [0, 4, 5, 0, 0, 0],
-          [0, 0, 0, 5, 0, 1]
-        ], schemaAfterDrop = [
-          [0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 5],
-          [3, 1, 2, 0, 0, 4],
-          [6, 1, 1, 3, 4, 3],
-          [5, 5, 6, 1, 3, 2],
-          [4, 4, 5, 5, 1, 1]
-        ];
+            [3, 1, 2, 3, 4, 5],
+            [6, 1, 1, 0, 3, 4],
+            [5, 0, 0, 0, 0, 3],
+            [4, 5, 6, 1, 1, 2],
+            [0, 4, 5, 0, 0, 0],
+            [0, 0, 0, 5, 0, 1]
+          ],
+          schemaAfterDrop = [
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 5],
+            [3, 1, 2, 0, 0, 4],
+            [6, 1, 1, 3, 4, 3],
+            [5, 5, 6, 1, 3, 2],
+            [4, 4, 5, 5, 1, 1]
+          ];
         const grid = new Grid(schemaWithGaps);
         grid.drop();
 
@@ -295,13 +296,41 @@ describe("grid", () => {
       });
       it("drops the correct gems into the correct places - 2", () => {
         const schemaWithGaps = [
-          [1, 0, 0, 0, 4, 5],
-          [6, 1, 1, 0, 3, 4],
-          [5, 6, 0, 0, 0, 3],
-          [4, 5, 6, 0, 1, 2],
-          [3, 0, 0, 0, 0, 1],
-          [2, 3, 0, 5, 6, 1]
-        ], schemaAfterDrop = [
+            [1, 0, 0, 0, 4, 5],
+            [6, 1, 1, 0, 3, 4],
+            [5, 6, 0, 0, 0, 3],
+            [4, 5, 6, 0, 1, 2],
+            [3, 0, 0, 0, 0, 1],
+            [2, 3, 0, 5, 6, 1]
+          ],
+          schemaAfterDrop = [
+            [1, 0, 0, 0, 0, 5],
+            [6, 0, 0, 0, 0, 4],
+            [5, 1, 0, 0, 4, 3],
+            [4, 6, 0, 0, 3, 2],
+            [3, 5, 1, 0, 1, 1],
+            [2, 3, 6, 5, 6, 1]
+          ];
+        const grid = new Grid(schemaWithGaps);
+        grid.drop();
+
+        const gridCurrent = grid.current.map(line => line.map(gem => gem.type));
+        expect(gridCurrent).toEqual(schemaAfterDrop);
+      });
+    });
+  });
+  describe("replenish", () => {
+    describe("when no gaps", function() {
+      it("does not change anything", function() {
+        const grid = new Grid(schemaNoMatches);
+        grid.replenish();
+        const gridCurrent = grid.current.map(line => line.map(gem => gem.type));
+        expect(gridCurrent).toEqual(schemaNoMatches);
+      });
+    });
+    describe("when gaps", function() {
+      it("fills in gaps with random gems", function() {
+        const schema = [
           [1, 0, 0, 0, 0, 5],
           [6, 0, 0, 0, 0, 4],
           [5, 1, 0, 0, 4, 3],
@@ -309,11 +338,22 @@ describe("grid", () => {
           [3, 5, 1, 0, 1, 1],
           [2, 3, 6, 5, 6, 1]
         ];
-        const grid = new Grid(schemaWithGaps);
-        grid.drop();
-
+        const schemaAfterReplenish = [
+          [1, 2, 6, 4, 6, 5],
+          [6, 1, 5, 3, 5, 4],
+          [5, 1, 4, 2, 4, 3],
+          [4, 6, 3, 1, 3, 2],
+          [3, 5, 1, 7, 1, 1],
+          [2, 3, 6, 5, 6, 1]
+        ];
+        const grid = new Grid(schema);
+        const mockRandom = () => {
+          const numbers = [1,2,3,4,5,6,7,1,2,3,4,5,6];
+          return () => numbers.pop();
+        };
+        grid.replenish(mockRandom());
         const gridCurrent = grid.current.map(line => line.map(gem => gem.type));
-        expect(gridCurrent).toEqual(schemaAfterDrop);
+        expect(gridCurrent).toEqual(schemaAfterReplenish);
       });
     });
   });

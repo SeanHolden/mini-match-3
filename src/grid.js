@@ -55,6 +55,10 @@ class Grid {
       }
     });
   }
+
+  replenish(random=Math.random) {
+    // TODO use random() to fill in gaps one by one
+  }
 }
 
 export default Grid;
